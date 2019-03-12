@@ -21,7 +21,7 @@ module.exports = {
 
     })
   },
-  allRest: () => {
+  addReview: () => {
     return new Promise((resolve, reject) => {
 
     })
