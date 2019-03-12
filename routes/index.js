@@ -33,7 +33,14 @@ router.post('/downVote', function(req, res, next) {
 });
 
 router.post('/addReview', function(req, res, next) {
-  restaurantController.addReview(req.body.id)
+  restaurantController.addReview(req.body)
+    .then(results=>{
+      res.json(results)
+    })
+    .catch(err=>res.json({error: err}))
+});
+router.get('/restReviews', function(req, res, next) {
+  restaurantController.restReviews(req.params.id)
     .then(results=>{
       res.json(results)
     })

@@ -1,30 +1,67 @@
-const Restaurants = require('../models/Restaurant');
+const Restaurant = require('../models/Restaurant');
+const Review = require('../models/Restaurant');
 const mongoose = require('mongoose');
 
 module.exports = {
   allRest: () => {
     return new Promise((resolve, reject) => {
-      Restaurants.find({})
+      Restaurant.find({})
         .then(results=>{
           resolve(results)
         })
         .catch(err=>console.log(err))
     })
   },
-  upVote: () => {
+  upVote: (id) => {
     return new Promise((resolve, reject) => {
-
+      Restaurant.findOne({yelpID: id})
+        .then(restaurant=>{
+          restaurant.rating++
+          restaurant.save()
+            .then(resolve(restaurant.rating))
+        })
     })
   },
-  downVote: () => {
+  downVote: (id) => {
     return new Promise((resolve, reject) => {
-
+      Restaurant.findOne({yelpID: id})
+      .then(restaurant=>{
+        restaurant.rating--
+        restaurant.save()
+          .then(resolve(restaurant.rating))
+      })
     })
   },
-  addReview: () => {
+  addReview: (review) => {
     return new Promise((resolve, reject) => {
-
+      const {author, title, body, recommendation, id} = review
+      Restaurant.findOne({yelpID: id})
+        .then(restaurant=>{
+          const newReview = new Review({
+            author,
+            title,
+            body,
+            recommendation,
+          })
+          newReview.save()
+            .then(review=>{
+              restaurant.review.push(review._id)
+              restaurant.save()
+                .then(result=>{
+                  resolve(result)
+                })
+            })
+        })
+        .catch(err=>{reject(err)})
     })
   },
-
+  restReviews: (id) => {
+    return new Promise((resolve, reject) => {
+      Restaurant.findOne({yelpID: id}).populate('reviews')
+        .then(restaurant=>{
+          resolve(restaurant)
+        })
+        .catch(err=>reject(err))
+    })
+  },
 }
