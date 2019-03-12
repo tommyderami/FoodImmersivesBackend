@@ -39,7 +39,8 @@ router.post('/addReview', function(req, res, next) {
     })
     .catch(err=>res.json({error: err}))
 });
-router.get('/restReviews', function(req, res, next) {
+router.get('/restReviews/:id', function(req, res, next) {
+  console.log(req.params)
   restaurantController.restReviews(req.params.id)
     .then(results=>{
       res.json(results)
