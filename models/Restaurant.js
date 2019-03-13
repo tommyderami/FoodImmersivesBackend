@@ -10,6 +10,8 @@ const RestaurantSchema = new mongoose.Schema({
   distance: Number,
   picture: String,
   category: [String],
+  lat: Number,
+  long: Number,
   rating: {type: Number, default:0 },
   reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}],
   timestamp: { type: String, default: format(now, 'dddd, MMMM, do YYYY, h:mm:ss a') },

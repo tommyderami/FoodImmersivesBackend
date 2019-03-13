@@ -71,6 +71,8 @@ downloadRestaurants()
               name: rest.name,
               address: rest.location.display_address,
               price: rest.price,
+              lat: rest.coordinates.latitude,
+              long: rest.coordinates.longitude,
               picture: rest.image_url,
               distance: rest.distance,
               category: rest.categories.map(cat => cat.title),
