@@ -73,17 +73,12 @@ downloadRestaurants()
               price: rest.price,
               lat: rest.coordinates.latitude,
               long: rest.coordinates.longitude,
-              searchString: rest.name+rest.categories.reduce((acc, cat)=>acc+cat.title)+rest.location.address1,
+              searchString: rest.name+rest.categories.reduce((acc, cat)=>{return (acc+cat.title)},"")+rest.location.address1,
               picture: rest.image_url,
               distance: rest.distance,
               category: rest.categories.map(cat => cat.title),
             });
-              newRest.save((err, savedRest)=>{
-                if (i === res.length - 1) {
-                  console.log('All Done--bye!')
-                  mongoose.disconnect();
-                }
-              });
+              newRest.save();
           }
           if (i === res.length - 1) {
             
