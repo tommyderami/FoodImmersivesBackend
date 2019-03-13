@@ -4,7 +4,7 @@ const Review = require('../models/Review');
 module.exports = {
   allRest: () => {
     return new Promise((resolve, reject) => {
-      Restaurant.find({}, {sort:{rating: -1}, limit: 50})
+      Restaurant.find({}, null, {sort:{rating: -1}, limit: 50})
         .then(results=>{
           resolve(results)
         })
